@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App</title>
+
+    <!-- Remix Icon: o conjunto `Glyph` cobre a navegação e os indicadores; o
+         resto dos ícones (sol/lua do tema, fechar do modal) sai daqui. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css" />
+
+    <script>
+      // Aplica o tema antes da primeira pintura: sem isto a tela pisca clara
+      // até o React montar. A lógica de verdade está em `src/ui/lib/tema.ts`;
+      // o prefixo da chave é o `SLUG` de `src/ui/lib/marca.ts`.
+      (function () {
+        try {
+          var escolhido = localStorage.getItem('app-tema');
+          var escuro =
+            escolhido === 'escuro' ||
+            (escolhido !== 'claro' && matchMedia('(prefers-color-scheme: dark)').matches);
+          if (escuro) document.documentElement.classList.add('dark');
+        } catch (e) {
+          /* Sem storage ou sem matchMedia: fica o tema claro. */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

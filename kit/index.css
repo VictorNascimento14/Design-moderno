@@ -1,0 +1,781 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Sistema visual "vidro orgânico"
+   Verde profundo sobre
+   uma base quase branca esverdeada, cartões de vidro fosco e pílulas.
+   As rampas ficam em OKLCH (L C H) porque o tailwind.config as consome como
+   `oklch(var(--token) / <alpha-value>)`.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --font-heading: 'Figtree', 'Inter', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Inter', system-ui, sans-serif;
+  --font-label: 'Figtree', 'Inter', system-ui, sans-serif;
+
+  /* Neutros da base — branco levemente esverdeado (#f5f8f5 → #eff3f0). */
+  --background-50: 0.978 0.004 150;
+  --background-100: 0.952 0.006 152;
+  --background-200: 0.920 0.008 152;
+  --background-300: 0.872 0.009 152;
+  --background-400: 0.790 0.011 152;
+  --background-500: 0.695 0.012 152;
+  --background-600: 0.585 0.012 152;
+  --background-700: 0.478 0.011 152;
+  --background-800: 0.382 0.009 152;
+  --background-900: 0.292 0.007 152;
+  --background-950: 0.203 0.005 152;
+
+  /* Destaque — verde vivo (esmeralda) para realces e barras de progresso. */
+  --accent-50: 0.979 0.021 166;
+  --accent-100: 0.950 0.052 163;
+  --accent-200: 0.905 0.093 164;
+  --accent-300: 0.845 0.143 165;
+  --accent-400: 0.765 0.177 163;
+  --accent-500: 0.696 0.170 162;
+  --accent-600: 0.596 0.145 163;
+  --accent-700: 0.508 0.118 166;
+  --accent-800: 0.432 0.095 167;
+  --accent-900: 0.378 0.077 169;
+  --accent-950: 0.262 0.051 173;
+
+  /* Marca — verde do design: #14532d (900), #166534 (800), #16a34a (600). */
+  --primary-50: 0.982 0.018 156;
+  --primary-100: 0.962 0.044 157;
+  --primary-200: 0.925 0.084 156;
+  --primary-300: 0.871 0.150 154;
+  --primary-400: 0.792 0.209 152;
+  --primary-500: 0.723 0.219 150;
+  --primary-600: 0.627 0.194 149;
+  --primary-700: 0.527 0.154 150;
+  --primary-800: 0.448 0.119 151;
+  --primary-900: 0.393 0.095 153;
+  --primary-950: 0.266 0.065 153;
+
+  /* Apoio — menta suave dos chips/avatares (#dcfce7 sobre #14532d). */
+  --secondary-50: 0.984 0.012 160;
+  --secondary-100: 0.966 0.030 158;
+  --secondary-200: 0.934 0.058 157;
+  --secondary-300: 0.884 0.088 156;
+  --secondary-400: 0.800 0.110 155;
+  --secondary-500: 0.700 0.115 155;
+  --secondary-600: 0.600 0.105 154;
+  --secondary-700: 0.510 0.090 153;
+  --secondary-800: 0.430 0.075 152;
+  --secondary-900: 0.360 0.060 152;
+  --secondary-950: 0.255 0.042 152;
+
+  /* Tinta — termina em #201e1d; os passos intermediários reproduzem os
+     rgba(31,41,37, α) do design já compostos sobre a base clara. */
+  --foreground-50: 0.985 0.003 150;
+  --foreground-100: 0.955 0.005 150;
+  --foreground-200: 0.905 0.006 150;
+  --foreground-300: 0.820 0.008 155;
+  /* 400 é decorativo/desabilitado (≈3:1); 500 é o texto secundário padrão e
+     precisa passar no AA sobre o vidro — daí ser mais escuro que o
+     rgba(31,41,37,0.55) do design, que dava só 3,9:1. */
+  --foreground-400: 0.620 0.009 160;
+  --foreground-500: 0.545 0.010 158;
+  --foreground-600: 0.495 0.010 160;
+  --foreground-700: 0.400 0.009 155;
+  --foreground-800: 0.310 0.007 145;
+  --foreground-900: 0.255 0.005 120;
+  --foreground-950: 0.209 0.004 100;
+
+  /* Alerta — os tons de `red-*` do Tailwind, agora em variável para o modo
+     escuro poder invertê-los. Os valores reproduzem o que o app já mostrava. */
+  --red-50: 0.971 0.013 17;
+  --red-100: 0.936 0.032 17;
+  --red-200: 0.885 0.062 18;
+  --red-300: 0.808 0.114 19;
+  --red-400: 0.704 0.191 22;
+  --red-500: 0.637 0.237 25;
+  --red-600: 0.577 0.245 27;
+  --red-700: 0.505 0.213 27;
+  --red-800: 0.444 0.177 27;
+  --red-900: 0.396 0.141 26;
+  --red-950: 0.258 0.092 26;
+
+  /* Atenção — os tons de `orange-*` do Tailwind, pelo mesmo motivo. */
+  --orange-50: 0.980 0.016 73;
+  --orange-100: 0.954 0.038 75;
+  --orange-200: 0.901 0.076 70;
+  --orange-300: 0.837 0.128 66;
+  --orange-400: 0.750 0.183 55;
+  --orange-500: 0.705 0.213 47;
+  --orange-600: 0.646 0.222 41;
+  --orange-700: 0.553 0.195 38;
+  --orange-800: 0.470 0.157 37;
+  --orange-900: 0.408 0.123 38;
+  --orange-950: 0.266 0.079 36;
+
+  /* Sombra da pílula ativa (`shadow-nav-active`): o verde da marca no claro.
+     No escuro a pílula clareia, e uma sombra verde sob ela fica cinza-suja —
+     ali quem dá profundidade é o preto. */
+  --nav-ink: 20 83 45;
+
+  /* Vidro — canais crus para compor rgba() nas utilidades abaixo. */
+  --glass-tint: 255 255 255;
+  --glass-edge: 255 255 255;
+  --glass-ink: 31 41 37;
+
+  /* Superfície de campo e tabela sobre o vidro — o antigo `bg-white/70`.
+     Clara no tema claro, escura no escuro: a mesma classe serve aos dois. */
+  --surface: 255 255 255;
+
+  /* Movimento — a curva e as durações vêm do design (rail 520ms/420ms). */
+  --ease-organic: cubic-bezier(0.22, 0.68, 0, 1);
+  --dur-open: 520ms;
+  --dur-close: 420ms;
+
+  /* Dropdown (desdobrar/dobrar) — um pouco mais lento que a coluna, a pedido
+     do dono (09/2026). Para acelerar ou frear todo dropdown, é aqui. */
+  --dd-open: 720ms;   /* o painel estica */
+  --dd-close: 560ms;  /* o painel recolhe */
+  --dd-item: 640ms;   /* cada item entrando */
+  --dd-lead: 110ms;   /* espera antes do primeiro item */
+  --dd-step: 65ms;    /* intervalo entre um item e o próximo */
+}
+
+/* ── Modo escuro ──────────────────────────────────────────────────────────
+   Toda rampa tem a claridade invertida e o matiz preservado: `primary-100`
+   continua sendo "o fundo fraco do verde" e `primary-800` "o texto forte"
+   — só que agora escuro e claro trocam de lado. É o que faz cada par já
+   escrito nas telas (`bg-primary-100 text-primary-800`,
+   `bg-red-100 text-red-700`…) continuar legível sem mexer em componente
+   nenhum. A saturação cai um pouco na ponta clara: sobre fundo escuro, cor
+   cheia brilha demais.
+   ──────────────────────────────────────────────────────────────────────── */
+.dark {
+  /* Base da página — ardósia neutra, a pedido do dono (19/09/2026): o verde
+     no fundo pesava. `-50` é #24272E e o painel de vidro cai em #333742, os
+     dois tons que ele passou. O verde da marca continua nos realces. */
+  --background-50: 0.273 0.014 267;
+  --background-100: 0.300 0.015 268;
+  --background-200: 0.337 0.020 269;
+  --background-300: 0.395 0.020 267;
+  --background-400: 0.465 0.019 267;
+  --background-500: 0.540 0.017 267;
+  --background-600: 0.620 0.015 267;
+  --background-700: 0.705 0.013 267;
+  --background-800: 0.795 0.010 267;
+  --background-900: 0.880 0.007 267;
+  --background-950: 0.950 0.004 267;
+
+  /* Tinta — no mesmo matiz neutro do fundo. `-950` é o texto do corpo;
+     `-500` é o mínimo de texto informativo pequeno e `-400` é decorativo
+     (invariante 2). A rampa sobe mais que no tema claro porque o painel de
+     vidro é claro: `-500` mede 4,99:1 no `.glass` e 4,35:1 no `.glass-strong`. */
+  --foreground-50: 0.215 0.012 267;
+  --foreground-100: 0.260 0.013 267;
+  --foreground-200: 0.310 0.014 267;
+  --foreground-300: 0.395 0.014 267;
+  --foreground-400: 0.615 0.013 267;
+  --foreground-500: 0.745 0.013 267;
+  --foreground-600: 0.800 0.012 267;
+  --foreground-700: 0.850 0.010 267;
+  --foreground-800: 0.898 0.008 267;
+  --foreground-900: 0.937 0.006 267;
+  --foreground-950: 0.972 0.003 267;
+
+  /* Marca — o verde continua verde; a pílula ativa passa a ser clara sobre o
+     escuro, com a tinta escura por cima. O topo da rampa (800/900) para em
+     torno de 0.72: mais claro que isso vira menta pastel e a coluna inteira
+     grita, que foi o primeiro desenho e o dono recusou. */
+  --primary-50: 0.225 0.042 153;
+  --primary-100: 0.272 0.056 153;
+  --primary-200: 0.320 0.070 153;
+  --primary-300: 0.380 0.088 152;
+  --primary-400: 0.455 0.110 151;
+  --primary-500: 0.535 0.132 150;
+  --primary-600: 0.610 0.148 150;
+  --primary-700: 0.672 0.152 151;
+  --primary-800: 0.722 0.145 152;
+  --primary-900: 0.762 0.135 153;
+  --primary-950: 0.890 0.070 153;
+
+  --secondary-50: 0.250 0.030 154;
+  --secondary-100: 0.292 0.040 154;
+  --secondary-200: 0.340 0.050 154;
+  --secondary-300: 0.400 0.060 154;
+  --secondary-400: 0.480 0.072 154;
+  --secondary-500: 0.570 0.080 155;
+  --secondary-600: 0.660 0.080 155;
+  --secondary-700: 0.750 0.072 156;
+  --secondary-800: 0.830 0.058 157;
+  --secondary-900: 0.890 0.042 158;
+  --secondary-950: 0.950 0.022 160;
+
+  --accent-50: 0.245 0.038 172;
+  --accent-100: 0.290 0.052 170;
+  --accent-200: 0.340 0.068 168;
+  --accent-300: 0.405 0.088 166;
+  --accent-400: 0.490 0.110 164;
+  --accent-500: 0.580 0.130 163;
+  --accent-600: 0.672 0.140 162;
+  --accent-700: 0.760 0.128 163;
+  --accent-800: 0.838 0.100 164;
+  --accent-900: 0.895 0.072 166;
+  --accent-950: 0.950 0.036 168;
+
+  --red-50: 0.248 0.070 26;
+  --red-100: 0.300 0.092 26;
+  --red-200: 0.360 0.115 26;
+  --red-300: 0.440 0.145 26;
+  --red-400: 0.530 0.175 26;
+  --red-500: 0.620 0.205 26;
+  --red-600: 0.700 0.185 25;
+  --red-700: 0.790 0.148 22;
+  --red-800: 0.862 0.108 20;
+  --red-900: 0.912 0.072 19;
+  --red-950: 0.960 0.030 18;
+
+  --orange-50: 0.255 0.062 40;
+  --orange-100: 0.305 0.082 41;
+  --orange-200: 0.365 0.102 44;
+  --orange-300: 0.445 0.128 48;
+  --orange-400: 0.535 0.152 53;
+  --orange-500: 0.625 0.170 58;
+  --orange-600: 0.712 0.158 62;
+  --orange-700: 0.798 0.132 66;
+  --orange-800: 0.866 0.100 70;
+  --orange-900: 0.916 0.068 74;
+  --orange-950: 0.962 0.028 76;
+
+  --nav-ink: 0 0 0;
+
+  /* Vidro — a tinta é calculada para o painel cair em #333742 depois de
+     composta a 55% sobre a página (#24272E). A quina de luz é um fio claro
+     neutro, e a sombra é preta, que é o que dá profundidade no escuro. */
+  --glass-tint: 63 68 82;
+  --glass-edge: 148 156 178;
+  --glass-ink: 0 0 0;
+
+  /* Campo e cabeçalho de tabela — mais escuros que o vidro, e não mais claros. */
+  --surface: 27 30 36;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: var(--font-body);
+    /* O gradiente do design (170deg, #f5f8f5 → #eff3f0) fixo atrás de tudo. */
+    background-color: oklch(var(--background-50));
+    background-image: linear-gradient(
+      170deg,
+      oklch(var(--background-50)) 0%,
+      oklch(var(--background-100)) 100%
+    );
+    background-attachment: fixed;
+    color: oklch(var(--foreground-950));
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.015em;
+  }
+}
+
+/* ── Vidro ────────────────────────────────────────────────────────────────
+   Três intensidades, todas com o mesmo desfoque saturado do design. A borda
+   clara é o que dá a "quina de luz" no topo do cartão.
+   ──────────────────────────────────────────────────────────────────────── */
+@layer components {
+  .glass,
+  .glass-md,
+  .glass-strong,
+  .glass-pill {
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgb(var(--glass-edge) / 0.75);
+  }
+
+  .glass {
+    background: rgb(var(--glass-tint) / 0.55);
+    border-radius: 26px;
+    box-shadow: 0 12px 30px rgb(var(--glass-ink) / 0.09);
+  }
+
+  .glass-md {
+    background: rgb(var(--glass-tint) / 0.62);
+    border-color: rgb(var(--glass-edge) / 0.8);
+    border-radius: 26px;
+    box-shadow: 0 12px 30px rgb(var(--glass-ink) / 0.09);
+  }
+
+  .glass-strong {
+    background: rgb(var(--glass-tint) / 0.85);
+    border-color: rgb(var(--glass-edge) / 0.78);
+    border-radius: 28px;
+    box-shadow: 0 12px 30px rgb(var(--glass-ink) / 0.14);
+  }
+
+  .glass-pill {
+    background: rgb(var(--glass-tint) / 0.6);
+    border-radius: 999px;
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    box-shadow: 0 8px 20px rgb(var(--glass-ink) / 0.07);
+  }
+
+  /* Deslocamento do conteúdo pela coluna flutuante. O valor vem do estado em
+     `html[data-rail]`, escrito por `lib/sidebarCollapsed` — assim a página
+     reflui junto com a coluna (inclusive na espiada por hover, como no
+     design) sem que nenhuma tela precise assinar o store.
+     108 = 16 + 76 + 16 (recolhida) · 268 = 16 + 236 + 16 (aberta ou espiada).
+     A duração segue a da coluna: abrir é mais lento que fechar, e o estado de
+     destino é quem manda na transição. */
+  .rail-offset {
+    transition: padding-left var(--dur-close) var(--ease-organic);
+  }
+  @media (min-width: 768px) {
+    .rail-offset { padding-left: 268px; }
+    :root[data-rail="collapsed"] .rail-offset { padding-left: 108px; }
+    :root:not([data-rail="collapsed"]) .rail-offset {
+      transition-duration: var(--dur-open);
+    }
+  }
+
+  /* Superfície interna translúcida (a faixa "Unidade: todas" do design, e
+     também o cartão dentro de um cartão). O raio fica com quem usa: pílula
+     numa faixa, 18px num cartão. */
+  .glass-inset {
+    background: rgb(var(--glass-tint) / 0.75);
+    border: 1px solid rgb(var(--glass-ink) / 0.06);
+  }
+}
+
+/* ── Lista do <select> ────────────────────────────────────────────────────
+   A lista que abre no clique é desenhada pelo navegador e vinha quadrada.
+   `appearance: base-select` entrega a lista ao CSS, e ela ganha o vidro, o
+   raio e as opções em pílula do menu do ProfileSwitcher.
+   ponytail: vale só onde a propriedade existe — Chrome e Edge 135+, inclusive
+   Android (conferido em 09/2026). Safari, iOS e Firefox descartam o @supports
+   inteiro e seguem com a lista nativa, sem quebrar. Quando suportarem, o
+   mesmo bloco passa a valer lá, sem mudança.
+   Efeitos no gatilho fechado (conferidos no Chrome 151): a largura automática
+   passa a acompanhar o valor escolhido, e não mais a opção mais longa; valor
+   longo em campo estreito quebra em duas linhas em vez de ser cortado — o
+   rótulo mora na shadow DOM do navegador e não aceita reticências.
+   ──────────────────────────────────────────────────────────────────────── */
+@supports (appearance: base-select) {
+  select,
+  ::picker(select) {
+    appearance: base-select;
+  }
+
+  /* A seta do design (o chevron do Glyph) no lugar do triângulo do navegador;
+     vira quando a lista abre, como no ProfileSwitcher. */
+  select::picker-icon {
+    content: "";
+    align-self: center;
+    width: 14px;
+    height: 14px;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9.5 6 6 6-6'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    transition: rotate var(--dd-close) var(--ease-organic);
+  }
+  select:open::picker-icon {
+    rotate: 180deg;
+    transition-duration: var(--dd-open);
+  }
+
+  /* Mesmo vidro do `.glass-strong` — a classe não alcança o pseudo-elemento.
+     A margem no fim só age quando a lista encostaria na borda da tela. */
+  ::picker(select) {
+    margin-block: 8px;
+    margin-inline-end: 16px;
+    padding: 6px;
+    border: 1px solid rgb(var(--glass-edge) / 0.78);
+    border-radius: 28px;
+    background: rgb(var(--glass-tint) / 0.85);
+    backdrop-filter: blur(20px) saturate(1.3);
+    box-shadow: 0 12px 30px rgb(var(--glass-ink) / 0.14);
+    color: oklch(var(--foreground-600));
+  }
+
+  /* Select sem caixa própria, sozinho numa pílula de vidro (o filtro
+     "Unidade" da diretoria): o campo que se vê é a pílula, e a lista se alinha
+     a ELA — mesma borda esquerda e, no mínimo, a mesma largura (a largura
+     mínima do navegador é `anchor-size()` da âncora) — em vez de nascer no
+     meio dela, onde começa o select transparente. `anchor-scope` prende o
+     nome a cada pílula: com duas na tela, cada lista acha a sua. */
+  .glass-pill:has(> select:only-of-type) {
+    anchor-name: --campo-do-select;
+    anchor-scope: --campo-do-select;
+  }
+  .glass-pill > select:only-of-type::picker(select) {
+    position-anchor: --campo-do-select;
+  }
+
+  /* Desdobrar/dobrar — a coreografia do `.dropdown` (mais abaixo) na lista do
+     select. Anima a altura, e não `scale`, de propósito: a lista abre PARA
+     CIMA quando sobra mais espaço acima (`position-try-order: most-block-size`
+     do navegador), e só a altura cresce a partir do lado ancorado ao campo
+     nos dois sentidos. `display` e `overlay` seguram a lista na tela até o
+     fim da saída. */
+  ::picker(select) {
+    interpolate-size: allow-keywords;
+    min-block-size: 0;
+    block-size: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--dd-close) var(--ease-organic),
+      opacity 360ms ease,
+      display var(--dd-close) allow-discrete,
+      overlay var(--dd-close) allow-discrete;
+  }
+  select:open::picker(select) {
+    block-size: auto;
+    opacity: 1;
+    /* A rolagem só liga quando a lista terminou de esticar: antes disso, o
+       conteúdo maior que a caixa acenderia a barra a cada abertura. */
+    overflow: auto;
+    transition:
+      block-size var(--dd-open) var(--ease-organic),
+      opacity 280ms ease,
+      overflow 0s var(--dd-open) allow-discrete;
+  }
+  @starting-style {
+    select:open::picker(select) {
+      block-size: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    ::picker(select),
+    select::picker-icon {
+      transition-duration: 0.01ms !important;
+      transition-delay: 0s !important;
+    }
+  }
+
+  option {
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    /* Nome de hospital passa de 40 caracteres: quebra dentro da lista em vez
+       de alargá-la para fora da tela do celular. */
+    white-space: normal;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+  option:hover,
+  option:focus-visible {
+    background-color: oklch(var(--primary-900) / 0.07);
+    color: oklch(var(--primary-900));
+  }
+  option:checked {
+    background-color: oklch(var(--primary-900));
+    color: oklch(var(--primary-50));
+    font-weight: 600;
+  }
+  option::checkmark {
+    order: 1;
+    margin-inline-start: auto;
+  }
+}
+
+/* ── Desdobrar / dobrar — todo dropdown ───────────────────────────────────
+   A coreografia única de lista que abre e fecha no app. Abrir: o painel estica
+   da altura zero até o conteúdo e os itens entram um a um. Fechar: o painel
+   recolhe e some levando os itens — sem escalonar a saída, que senão arrasta
+   (a mesma regra da coluna lateral).
+   · `<select>`: nada a fazer — o bloco `::picker(select)` acima já anima.
+   · Painel próprio: `<Dropdown open>` (components/base) monta o painel; cada
+     item leva `.dropdown-item`.
+   O painel fica montado fechado: desmontar (`{open && …}`) mata a saída.
+   ──────────────────────────────────────────────────────────────────────── */
+.dropdown {
+  display: grid;
+  /* Trilho de 0fr a 1fr: é o que faz a altura "auto" transicionar em todo
+     navegador. O filho precisa de `min-height: 0` para o trilho chegar a 0. */
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--dd-close) var(--ease-organic),
+    opacity 360ms ease,
+    visibility 0s linear var(--dd-close);
+}
+.dropdown[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--dd-open) var(--ease-organic),
+    opacity 280ms ease,
+    visibility 0s;
+}
+.dropdown > * {
+  min-height: 0;
+}
+
+/* Entrada escalonada. Animação, e não transição, para não brigar com o
+   `transition-colors` e o `.press` que os itens já têm; e `translate`, não
+   `transform`, pelo mesmo motivo. `select:open option` só existe onde a lista
+   é base-select — nos outros navegadores o `:is()` descarta o trecho. */
+@keyframes dropdown-item-in {
+  from { opacity: 0; translate: 0 -6px; }
+}
+:is(.dropdown[data-open="true"] .dropdown-item, select:open option) {
+  animation: dropdown-item-in var(--dd-item) var(--ease-organic) backwards;
+  animation-delay: calc(var(--dd-lead) + var(--i, 0) * var(--dd-step));
+}
+
+/* Anel de foco por DENTRO do item: por fora, o item focado ficava 4px maior
+   que os outros e o anel encostava na borda do painel (ou era cortado pelo
+   `overflow` dele). No item escuro — marcado ou atual — o anel é claro, senão
+   o verde sobre verde não chega a 3:1. */
+:is(option, .dropdown-item):focus-visible {
+  outline-offset: -2px;
+}
+:is(option:checked, .dropdown-item[aria-current="true"]):focus-visible {
+  outline-color: oklch(var(--primary-100));
+}
+
+/* O índice vem da posição entre irmãos — item nenhum precisa de marcação.
+   Teto em 8: do 9º em diante entram juntos, senão lista longa arrasta.
+   ponytail: `sibling-index()` faria isto em uma linha, mas ainda não existe
+   em todo navegador; quando existir, troque as oito regras por ela. */
+:is(option, .dropdown-item):nth-child(2) { --i: 1; }
+:is(option, .dropdown-item):nth-child(3) { --i: 2; }
+:is(option, .dropdown-item):nth-child(4) { --i: 3; }
+:is(option, .dropdown-item):nth-child(5) { --i: 4; }
+:is(option, .dropdown-item):nth-child(6) { --i: 5; }
+:is(option, .dropdown-item):nth-child(7) { --i: 6; }
+:is(option, .dropdown-item):nth-child(8) { --i: 7; }
+:is(option, .dropdown-item):nth-child(n + 9) { --i: 8; }
+
+/* ── Micro-interações ─────────────────────────────────────────────────────
+   `lift` levanta o cartão no hover; `press` afunda no clique; `sheen` passa
+   um brilho diagonal. Todas se anulam sob prefers-reduced-motion.
+   ──────────────────────────────────────────────────────────────────────── */
+@layer components {
+  .lift {
+    transition:
+      transform 340ms var(--ease-organic),
+      box-shadow 340ms var(--ease-organic),
+      background-color 240ms ease,
+      border-color 240ms ease;
+    will-change: transform;
+  }
+  .lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 44px rgb(var(--glass-ink) / 0.14);
+  }
+
+  .press {
+    transition: transform 160ms var(--ease-organic);
+  }
+  .press:active {
+    transform: scale(0.975);
+  }
+
+  /* Brilho que atravessa o cartão em diagonal ao passar o mouse. */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .sheen::after {
+    content: "";
+    position: absolute;
+    inset: -40% -60%;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 38%,
+      rgb(var(--glass-tint) / 0.55) 50%,
+      transparent 62%
+    );
+    transform: translateX(-70%);
+    opacity: 0;
+    transition: transform 900ms var(--ease-organic), opacity 260ms ease;
+  }
+  .sheen:hover::after {
+    transform: translateX(70%);
+    opacity: 1;
+  }
+
+  /* Sublinhado que cresce do centro — usado nas abas. */
+  .underline-grow {
+    position: relative;
+  }
+  .underline-grow::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 2px;
+    height: 2px;
+    border-radius: 999px;
+    background: oklch(var(--primary-600));
+    transition: left 300ms var(--ease-organic), right 300ms var(--ease-organic);
+  }
+  .underline-grow:hover::after {
+    left: 18%;
+    right: 18%;
+  }
+}
+
+/* ── Animações ───────────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 0.5s ease-out backwards; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in { animation: fade-in 0.35s ease-out backwards; }
+
+/* Entrada dos cartões: sobe, aparece e assenta a escala.
+   `backwards` (e não `both`) de propósito: com `both`, o último quadro fica
+   aplicado para sempre e — como animação vence declaração normal na cascata —
+   o `transform` congelado anularia o `translateY` do `.lift:hover`. Com
+   `backwards`, o quadro inicial só vale durante o atraso e, ao terminar, o
+   elemento volta ao estado natural. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-rise {
+  animation: rise 620ms var(--ease-organic) backwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Crescimento das barras horizontais (`--w` = largura final). */
+@keyframes bar-grow {
+  from { width: 0%; }
+  to { width: var(--w, 100%); }
+}
+.animate-bar {
+  animation: bar-grow 900ms var(--ease-organic) backwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.7); }
+  70% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-pop { animation: pop-in 420ms var(--ease-organic) backwards; animation-delay: var(--d, 0ms); }
+
+/* Ponto "ao vivo" do cabeçalho. */
+@keyframes live-dot {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(var(--primary-500) / 0.55); }
+  70% { box-shadow: 0 0 0 6px oklch(var(--primary-500) / 0); }
+}
+.animate-live { animation: live-dot 2.2s ease-out infinite; }
+
+@keyframes shimmer {
+  from { background-position: -180% 0; }
+  to { background-position: 180% 0; }
+}
+.animate-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    rgb(var(--glass-ink) / 0.04) 25%,
+    rgb(var(--glass-tint) / 0.55) 50%,
+    rgb(var(--glass-ink) / 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* Barra de rolagem discreta nas faixas de abas. */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* Foco visível para navegação por teclado (acessibilidade) */
+:focus-visible {
+  outline: 2px solid oklch(var(--primary-600));
+  outline-offset: 2px;
+}
+
+/* ── Acessibilidade: respeitar quem pediu menos movimento ─────────────────
+   Anula deslocamento e animação em laço; o conteúdo continua legível porque
+   todo estado final é o estado "aberto"/"visível".
+   ──────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .lift:hover { transform: none; }
+  .press:active { transform: none; }
+  .sheen::after { display: none; }
+  /* Sem escalonamento: os itens aparecem junto com o painel. */
+  .dropdown,
+  .dropdown-item,
+  option {
+    transition-delay: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ── Exportar PDF ─────────────────────────────────────────────────────────
+   `imprimirComoPdf()` (src/lib/exportar.ts) pendura no <body> uma cópia da
+   área a imprimir e abre a impressão do navegador ("Salvar como PDF"): só a
+   cópia sai no papel — o resto sai do fluxo, sem deixar páginas em branco —,
+   sem o vidro: backdrop-filter e sombra não imprimem bem. */
+@media screen {
+  [data-print-clone] {
+    display: none !important;
+  }
+}
+@media print {
+  @page {
+    margin: 14mm;
+  }
+  body[data-print-mode="clone"] > :not([data-print-clone]) {
+    display: none !important;
+  }
+  body[data-print-mode="clone"] > [data-print-clone] {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  [data-print-hide] {
+    display: none !important;
+  }
+  .glass,
+  .glass-md,
+  .glass-strong,
+  .glass-pill,
+  .glass-inset {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
