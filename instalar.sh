@@ -81,6 +81,24 @@ else
   echo "   ↩︎  postcss.config já existe — mantido como está"
 fi
 
+echo "▸ Ensinando as regras ao agente (CLAUDE.md)"
+# Sem isto, o agente do projeto novo escreve telas fora do sistema: `bg-white`
+# sólido no lugar do vidro, `{open && …}` no lugar do <Dropdown>, coluna montada
+# dentro da página. Foi assim que o projeto de origem juntou 145 `bg-white` em
+# 37 arquivos antes de importar o design.
+REGRAS="$AQUI/docs/AGENTS-SNIPPET.md"
+BLOCO="$(sed -n '/^## 🎨 Sistema visual/,$p' "$REGRAS")"
+if [ -f "$DESTINO/CLAUDE.md" ]; then
+  if grep -q "Sistema visual — invariantes" "$DESTINO/CLAUDE.md"; then
+    echo "   ↩︎  CLAUDE.md já tem as invariantes — mantido como está"
+  else
+    printf '\n\n%s\n' "$BLOCO" >> "$DESTINO/CLAUDE.md"
+    echo "   +  bloco anexado ao CLAUDE.md que já existia"
+  fi
+else
+  printf '# %s\n\n%s\n' "$NOME" "$BLOCO" > "$DESTINO/CLAUDE.md"
+fi
+
 echo "▸ Escrevendo a marca"
 cat > "$DESTINO/src/ui/lib/marca.ts" <<EOF
 // A única coisa que cada projeto troca ao instalar o sistema visual.
@@ -116,6 +134,10 @@ if [ "$PROJETO_NOVO" = 1 ]; then
    npm run dev
 
 Depois: src/navegacao.tsx (os itens da coluna) e src/ui/lib/marca.ts (a marca).
+
+O CLAUDE.md já foi escrito com as invariantes do sistema — é o que faz o agente
+deste projeto novo escrever telas DENTRO do design, em vez de inventar uma
+segunda linguagem visual ao lado.
 EOF
 else
   cat <<EOF
@@ -140,6 +162,9 @@ Falta ligar — três linhas:
 
  3. Os ícones Remix (sol/lua do tema, fechar do modal), no <head>:
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css" />
+
+O CLAUDE.md recebeu as invariantes do sistema — é o que faz o agente escrever
+telas dentro do design em vez de inventar uma segunda linguagem ao lado.
 
 Conferir depois: \`darkMode: 'class'\` e o \`content\` do tailwind.config.ts
 cobrindo ./src/**/*.{js,ts,jsx,tsx}; \`react-router-dom\` instalado (a coluna, o

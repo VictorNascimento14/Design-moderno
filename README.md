@@ -72,6 +72,10 @@ Tailwind 3.4 com `darkMode: 'class'`, e o `content` cobrindo `./src/**/*.{js,ts,
 | `Glyph` | 23 ícones próprios, traçado 2.5 em caixa 24 |
 | `Avatar` | disco de iniciais com cor derivada do nome |
 | `Reveal` | envelope de entrada para o que não é cartão |
+| `Calendar` | calendário mensal: hoje em pílula verde, dia marcado com ponto |
+
+O instalador também escreve (ou anexa a) o **`CLAUDE.md`** do projeto com as invariantes — é o que
+mantém o agente escrevendo telas dentro do sistema em vez de inventar uma segunda linguagem ao lado.
 
 **Casca** (`src/ui/shell/`) — `RailLayout` (monta a coluna uma vez) · `Sidebar` (76↔236px, marcador
 que desliza, espiada por hover, gaveta do celular) · `PageShell` (moldura da tela) · `AppHeader` ·

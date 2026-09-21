@@ -33,6 +33,7 @@ export { useInView } from "./hooks/useInView";
 export { default as AnimatedNumber } from "./base/AnimatedNumber";
 export { default as Avatar } from "./base/Avatar";
 export { default as Button } from "./base/Button";
+export { default as Calendar } from "./base/Calendar";
 export { default as Dropdown } from "./base/Dropdown";
 export { default as GlassCard } from "./base/GlassCard";
 export { default as GlassPill } from "./base/GlassPill";
