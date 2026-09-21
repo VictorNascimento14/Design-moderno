@@ -6,18 +6,9 @@ interface CalendarProps {
   onDayClick?: (date: Date) => void;
 }
 
-const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
+import { diaISO } from "../lib/data";
 
-/**
- * Data local em `AAAA-MM-DD`.
- *
- * NÃO use `toISOString()` para isto: ele converte para UTC, e num fuso negativo
- * (o Brasil inteiro) o dia vira o seguinte a partir das 21h — "hoje" acenderia
- * no dia errado toda noite.
- */
-function diaISO(d: Date): string {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
+const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
 
 function gradeDoMes(ano: number, mes: number) {
   const primeiro = new Date(ano, mes, 1);

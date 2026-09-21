@@ -40,3 +40,20 @@ export function itemAtivo(item: ItemNav, pathname: string): boolean {
   if (item.exact || item.path === "/") return pathname === item.path;
   return pathname === item.path || pathname.startsWith(`${item.path}/`);
 }
+
+/**
+ * Os destinos da barra de baixo do celular.
+ *
+ * Com `chaves`, a ordem é a pedida e cada `key` é procurada entre todos os
+ * itens; `key` que não existe é **ignorada**, em vez de virar um buraco na
+ * barra — errar o nome de um destino não pode derrubar a navegação inteira.
+ *
+ * Sem `chaves`, o padrão de sempre: os itens achatados, na ordem da coluna.
+ */
+export function itensDaBarra(grupos: GrupoNav[], chaves?: string[]): ItemNav[] {
+  const todos = grupos.flatMap((g) => g.itens);
+  if (!chaves) return todos;
+  return chaves
+    .map((k) => todos.find((i) => i.key === k))
+    .filter((i): i is ItemNav => i !== undefined);
+}

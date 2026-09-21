@@ -5,6 +5,7 @@
 // Fundação
 export { EASE_ORGANIC, DUR_OPEN, DUR_CLOSE, stagger, usePrefersReducedMotion } from "./lib/motion";
 export { SLUG, NOME, MONOGRAMA } from "./lib/marca";
+export { diaISO } from "./lib/data";
 export {
   aplicarTema,
   definirTema,
@@ -53,4 +54,4 @@ export { default as RailLayout, type RailOutletContext } from "./shell/RailLayou
 export { default as Sidebar } from "./shell/Sidebar";
 export { default as TemaToggle } from "./shell/TemaToggle";
 export { default as ToastHost } from "./shell/ToastHost";
-export { itemAtivo, type Conta, type GrupoNav, type ItemNav } from "./shell/navegacao";
+export { itemAtivo, itensDaBarra, type Conta, type GrupoNav, type ItemNav } from "./shell/navegacao";

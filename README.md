@@ -72,18 +72,19 @@ Tailwind 3.4 com `darkMode: 'class'`, e o `content` cobrindo `./src/**/*.{js,ts,
 | `Glyph` | 23 ícones próprios, traçado 2.5 em caixa 24 |
 | `Avatar` | disco de iniciais com cor derivada do nome |
 | `Reveal` | envelope de entrada para o que não é cartão |
-| `Calendar` | calendário mensal: hoje em pílula verde, dia marcado com ponto |
+| `Calendar` | calendário mensal: hoje em pílula verde, dia marcado com ponto (`marcados` em `AAAA-MM-DD`; use `diaISO` para casar com o `onDayClick`) |
 
 O instalador também escreve (ou anexa a) o **`CLAUDE.md`** do projeto com as invariantes — é o que
 mantém o agente escrevendo telas dentro do sistema em vez de inventar uma segunda linguagem ao lado.
 
-**Casca** (`src/ui/shell/`) — `RailLayout` (monta a coluna uma vez) · `Sidebar` (76↔236px, marcador
+**Casca** (`src/ui/shell/`) — `RailLayout` (monta a coluna uma vez; `barraCelular` escolhe os
+destinos da barra de baixo, na ordem desejada) · `Sidebar` (76↔236px, marcador
 que desliza, espiada por hover, gaveta do celular) · `PageShell` (moldura da tela) · `AppHeader` ·
 `BottomNav` · `BrandMark` · `TemaToggle` · `ToastHost`
 
 **Utilidades** (`src/ui/lib/`, `src/ui/hooks/`) — `motion` (curva, durações, `stagger`,
 `usePrefersReducedMotion`) · `tema` (claro/escuro/sistema) · `sidebarCollapsed` (store do colapso) ·
-`toast` · `useInView`
+`toast` · `data` (`diaISO`, data local em `AAAA-MM-DD` — **não** use `toISOString()`) · `useInView`
 
 Dependências do kit: `react`, `react-dom`, `react-router-dom`. Nada mais.
 
