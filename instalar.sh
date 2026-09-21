@@ -70,6 +70,8 @@ cp -r "$AQUI/kit" "$DESTINO/src/ui"
 
 echo "▸ Configurando Tailwind e PostCSS"
 # O `content` do Tailwind precisa varrer src/ — é lá que o kit pousa.
+TAILWIND_SUBSTITUIDO=0
+[ -e "$DESTINO/tailwind.config.ts" ] && TAILWIND_SUBSTITUIDO=1
 preservar "$DESTINO/tailwind.config.ts"
 mv "$DESTINO/src/ui/tailwind.config.ts" "$DESTINO/tailwind.config.ts"
 if [ ! -f "$DESTINO/postcss.config.ts" ] && [ ! -f "$DESTINO/postcss.config.js" ]; then
@@ -143,4 +145,13 @@ Conferir depois: \`darkMode: 'class'\` e o \`content\` do tailwind.config.ts
 cobrindo ./src/**/*.{js,ts,jsx,tsx}; \`react-router-dom\` instalado (a coluna, o
 PageShell e a barra de baixo usam).
 EOF
+  if [ "$TAILWIND_SUBSTITUIDO" = 1 ]; then
+    cat <<'EOF'
+
+⚠️  O tailwind.config.ts do projeto foi SUBSTITUÍDO pelo do sistema — as rampas
+    de cor, os raios, as sombras e as curvas moram nele e o sistema não funciona
+    sem. O seu está em tailwind.config.ts.bak: traga de lá, para dentro de
+    `theme.extend`, o que era seu. O instalador não mescla.
+EOF
+  fi
 fi
