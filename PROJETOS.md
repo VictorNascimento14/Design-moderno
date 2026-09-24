@@ -7,9 +7,7 @@
 ## Projeto principal: vidro-orgânico
 
 - **Pasta local do projeto** (obrigatório): `/home/victor/Documentos/DEV/vidro-organico`
-- **Repositório do projeto** (obrigatório): ⚠️ **a definir** — o repositório remoto ainda não foi
-  criado. Enquanto isso, o registro está incompleto de propósito: criar repositório é ação externa e
-  depende de decisão do dono (conta/organização e visibilidade).
+- **Repositório do projeto** (obrigatório): https://github.com/VictorNascimento14/Design-moderno
 - **Documentação local** (obrigatório): `/home/victor/Documentos/DEV/vidro-organico/docs`
 - **Repositório da documentação** (opcional): — (a documentação mora no mesmo repositório)
 - **Infra / VPS** (opcional): — (não roda em lugar nenhum; é um kit de arquivos)
