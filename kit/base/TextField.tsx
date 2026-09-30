@@ -22,8 +22,10 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextFiel
         {label}
       </label>
       <div className="relative">
+        {/* `z-10`: o `backdrop-blur` do campo cria contexto de empilhamento, e o
+            campo — que vem depois no DOM — pintava POR CIMA do ícone. */}
         {icon && (
-          <span className="absolute left-4 top-1/2 flex h-4 w-4 -translate-y-1/2 items-center justify-center text-base text-foreground-400">
+          <span className="pointer-events-none absolute left-4 top-1/2 z-10 flex h-4 w-4 -translate-y-1/2 items-center justify-center text-base text-foreground-400">
             <i className={icon} aria-hidden="true" />
           </span>
         )}
