@@ -59,7 +59,8 @@ export default function Calendar({ marcados = [], onDayClick }: CalendarProps) {
         <button type="button" onClick={mesAnterior} className={navClass} aria-label="Mês anterior">
           <i className="ri-arrow-left-s-line" aria-hidden="true" />
         </button>
-        <span className="text-[17px] font-bold capitalize tracking-[-0.01em] text-foreground-950">
+        {/* `first-letter:uppercase`, não `capitalize`: este faria "Setembro De 2026". */}
+        <span className="inline-block text-[17px] font-bold tracking-[-0.01em] text-foreground-950 first-letter:uppercase">
           {rotuloMes}
         </span>
         <button type="button" onClick={mesSeguinte} className={navClass} aria-label="Próximo mês">
